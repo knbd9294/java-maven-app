@@ -1,2 +1,13 @@
-.idea/*
-target
+@"
+target/
+*.log
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+.idea/
+.vscode/
+*.DS_Store
+*.jar.original
+"@ | Out-File -Encoding UTF8 .gitignore
