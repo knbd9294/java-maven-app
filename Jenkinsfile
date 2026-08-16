@@ -21,36 +21,36 @@ pipeline {
             }
         }
         stage("build jar") {
-            steps {
-                when {
+            when {
                     expression {
                         BRANCH_NAME == "main"
                     }
-                }
+            }
+            steps {
                 script {
                     gv.buildJar()
                 }
             }
         }
         stage("build image") {
-            steps {
-                when {
+            when {
                     expression {
                         BRANCH_NAME == "main"
                     }
-                }
+            }
+            steps {
                 script {
                     gv.buildImage()
                 }
             }
         }
         stage("deploy") {
-            steps {
-                when {
+            when {
                     expression {
                         BRANCH_NAME == "main"
                     }
-                }
+            }
+            steps {
                 script {
                      gv.deployApp()
                 }
