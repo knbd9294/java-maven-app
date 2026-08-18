@@ -27,10 +27,12 @@ pipeline {
                 }
             }
         }
-        stage("build image") {
+        stage("build and push image") {
             steps {
                 script {
-                    buildImage "knbd2015/demo-app:jma-3.0"
+                    buildImage "knbd2015/demo-app:jma-4.0"
+                    dockerLogin()
+                    dockerPush "knbd2015/demo-app:jma-4.0"
                 }
             }
         }
