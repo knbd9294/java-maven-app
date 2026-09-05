@@ -16,7 +16,7 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    echo "Hello World"
+                    kojsrfoierjoigre
                     gv.testApp()
                 }
             }
