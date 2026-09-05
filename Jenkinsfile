@@ -16,7 +16,6 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    kojsrfoierjoigre
                     gv.testApp()
                 }
             }
