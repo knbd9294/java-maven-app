@@ -23,7 +23,7 @@ pipeline {
         stage("build jar") {
             when {
                     expression {
-                        BRANCH_NAME == "main"
+                        env.BRANCH_NAME == "main"
                     }
             }
             steps {
@@ -35,7 +35,7 @@ pipeline {
         stage("build image") {
             when {
                     expression {
-                        BRANCH_NAME == "main"
+                        env.BRANCH_NAME == "main"
                     }
             }
             steps {
@@ -47,7 +47,7 @@ pipeline {
         stage("deploy") {
             when {
                     expression {
-                        BRANCH_NAME == "main"
+                        env.BRANCH_NAME == "main"
                     }
             }
             steps {
