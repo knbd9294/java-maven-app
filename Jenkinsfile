@@ -16,7 +16,6 @@ pipeline {
         stage("test") {
             steps {
                 script {
-                    echo "Hello"
                     echo env.BRANCHNAME
                     gv.testApp()
                 }
