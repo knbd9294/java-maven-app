@@ -20,6 +20,17 @@ pipeline {
                  echo "Running tests..."
             }
         }
+        
+        stage('increment version') {
+            steps {
+                echo 'incrementing app version...'
+                sh 'mvn build-helper:parse-version version:set -DnewVersion=\\\${parseVersion.majorVersion}.\\\${parseVersion.minorVersion}.\\\${parseVersion.nextIncrementalVersion} version:commit'
+                def matcher = readFile('pom.xml') =~ '<version>(.+)</version>'
+                def version = matcher[0][1]
+                env.IMAGE_NAME = "$version-$BUILD_NUMBER"
+            }
+        }
+        
         stage("build jar") {
             steps {
                 script {
@@ -30,9 +41,9 @@ pipeline {
         stage("build and push image") {
             steps {
                 script {
-                    buildImage "knbd2015/demo-app:jma-4.0"
+                    buildImage "knbd2015/demo-app:$IMAGE_NAME"
                     dockerLogin()
-                    dockerPush "knbd2015/demo-app:jma-4.0"
+                    dockerPush "knbd2015/demo-app:$IMAGE_NAME"
                 }
             }
         }
