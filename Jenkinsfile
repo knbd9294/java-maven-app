@@ -62,17 +62,17 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        sh 'git config --global user.email "jenkins@example.com"'
-                        sh 'git config --global user.name "jenkins@example.com"'
+                        sh 'git config --global user.email "kemeni.nguendjio@gmail.com"'
+                        sh 'git config --global user.name "boris kemeni"'
                         
                         sh 'git status'
                         sh 'git branch'
                         sh 'git config --list'
                         
                         sh 'git remote set-url origin https://${USER}:${PASS}@https://github.com/knbd9294/java-maven-app.git'
-                        sh 'git add.'
+                        sh 'git add .'
                         sh 'git commit -m "ci: version bump"'
-                        sh 'git push origin HEAD:jenkins-jobs'
+                        sh 'git push origin HEAD:jenkins-shared-lib'
                     }
                 }
             }
