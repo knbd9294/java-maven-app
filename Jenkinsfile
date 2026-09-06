@@ -17,7 +17,6 @@ pipeline {
         }
         stage("test") {
             steps {
-                 echo "am not getting any result when committing"
                  echo "Running tests...."
             }
         }
