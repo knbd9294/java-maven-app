@@ -23,6 +23,7 @@ pipeline {
         
         stage('increment version') {
             steps {
+                echo "Try to see if push is done when committing"
                 script {
                     echo 'incrementing app version...'
                     sh 'mvn build-helper:parse-version versions:set -DnewVersion=\\${parsedVersion.majorVersion}.\\${parsedVersion.minorVersion}.\\${parsedVersion.nextIncrementalVersion} versions:commit'
