@@ -1,59 +1,46 @@
-def gv
+#!/usr/bin/env groovy
+
+library identifier: 'jenkins-shared-library@master', retriever: modernSCM(
+    [$class: 'GitSCMSource',
+    remote: 'https://github.com/knbd9294/jenkins-shared-library.git',
+    credentialsId: 'github-credentials',
+    ]
+)
 
 pipeline {
     agent any
     tools {
-        maven 'maven-3.9'
+        maven 'Maven'
+    }
+    environment {
+        IMAGE_NAME = 'knbd2015/demo-app:java-maven-1.0'
     }
     stages {
-        stage("init") {
+        stage('build app') {
+            steps {
+                echo "Building application jar..."
+                buildJar()
+                
+            }
+        }
+        stage('buid image') {
             steps {
                 script {
-                    echo "Hello World"
-                    gv = load "script.groovy"
+                    echo "Building docker image..."
+                    buildImage(env.IMAGE_NAME)
+                    dockerLogin()
+                    dockerPush(env.IMAGE_NAME)
                 }
             }
         }
-        stage("test") {
+        stage('deploy') {
             steps {
                 script {
-                    gv.testApp()
-                }
-            }
-        }
-        stage("build jar") {
-            when {
-                    expression {
-                        env.BRANCH_NAME == "main"
-                    }
-            }
-            steps {
-                script {
-                    gv.buildJar()
-                }
-            }
-        }
-        stage("build image") {
-            when {
-                    expression {
-                        env.BRANCH_NAME == "main"
-                    }
-            }
-            steps {
-                script {
-                    gv.buildImage()
-                }
-            }
-        }
-        stage("deploy") {
-            when {
-                    expression {
-                        env.BRANCH_NAME == "main"
-                    }
-            }
-            steps {
-                script {
-                     gv.deployApp()
+                    echo "Deploying docker image application to EC2..."
+                    def dockerCmd = "docker run -d -p 8080:8080 ${env.IMAGE_NAME}"
+                    sshagent([ec2-server-key]){
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.139.94.251 ${dockerCmd}"
+                    } 
                 }
             }
         }
