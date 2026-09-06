@@ -45,16 +45,13 @@ pipeline {
             }
         }
         stage("deploy") {
-            when {
-                    expression {
-                        BRANCH_NAME == "main"
-                    }
-            }
             steps {
                 script {
-                     gv.deployApp()
+                     def dockerCmd = 'docker run -p 3080:3080 -d knbd2015/react-nodejs-app:1.0'
+                     sshagent(['ec2-server-key']) {
+                         sh "ssh -o StrictHostKeyChecking=no ec2-user@3.139.94.251 ${dockerCmd}"
+                     }
                 }
             }
         }
-    }
 }
