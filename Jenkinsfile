@@ -58,5 +58,12 @@ pipeline {
                 }
             }
         }
+        stage('commit version update') {
+            steps {
+                script {
+                    withCredentials()
+                }
+            }
+        }
     }
 }
