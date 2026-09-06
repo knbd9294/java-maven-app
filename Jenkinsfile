@@ -35,15 +35,16 @@ pipeline {
             steps {
                 script {
                     buildJar()
+                    sh 'mvn clean package'
                 }
             }
         }
         stage("build and push image") {
             steps {
                 script {
-                    buildImage "knbd2015/demo-app:$IMAGE_NAME"
+                    buildImage "knbd2015/demo-app:${env.IMAGE_NAME}"
                     dockerLogin()
-                    dockerPush "knbd2015/demo-app:$IMAGE_NAME"
+                    dockerPush "knbd2015/demo-app:${env.IMAGE_NAME}"
                 }
             }
         }
