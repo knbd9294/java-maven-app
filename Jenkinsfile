@@ -38,7 +38,7 @@ pipeline {
                 script {
                     echo "Deploying docker image application to EC2..."
                     //def dockerCmd = "docker run -d -p 8080:8080 ${env.IMAGE_NAME}"
-                    def ec2_server_ip = '52.15.197.210'
+                    def ec2_server_ip = '3.16.169.133'
                     //def dockerComposeCmd = "docker compose -f docker-compose.yaml up --detach"
                     def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
                     sshagent(['ec2-server-key']){
