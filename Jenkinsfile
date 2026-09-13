@@ -12,15 +12,16 @@ pipeline {
     tools {
         maven 'maven-3.9'
     }
+    
     environment {
         IMAGE_NAME = 'knbd2015/demo-app:java-maven-1.0'
     }
+    
     stages {
         stage('build app') {
             steps {
                 echo "Building application jar..."
                 buildJar()
-                
             }
         }
         stage('buid image') {
