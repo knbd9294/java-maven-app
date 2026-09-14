@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   java-maven-app:
-    image: "knbd2015/demo-app:${TAG}" #knbd2015/demo-app:java-maven-1.0
+    image: ${IMAGE} #"knbd2015/demo-app:${TAG}" #knbd2015/demo-app:java-maven-1.0
     ports:
       - "8080:8080"
     depends_on:
